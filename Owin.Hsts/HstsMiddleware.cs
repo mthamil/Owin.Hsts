@@ -16,6 +16,7 @@ namespace Owin.Hsts
             : base(next)
         {
             _currentSettings = new HstsSettings();
+
         }
 
         public HstsMiddleware(OwinMiddleware next, HstsSettings settings)
@@ -26,24 +27,34 @@ namespace Owin.Hsts
 
         public override async Task Invoke(IOwinContext context)
         {
+            // register for the call to OnSendingHeaders first
+            // ref: https://github.com/aspnet/Security/issues/31#issuecomment-50470832
+            context.Response.OnSendingHeaders(state =>
+            {
+                var settings = state as HstsSettings;
+
+                if (settings != null)
+                {
+                    // We need to check to see if the application has already added the key
+                    if (context.Response.Headers.ContainsKey(hstsHeaderName))
+                    {
+                        // it has, so check to see if we can override the application
+                        if (_currentSettings.OverwriteExisting)
+                        {
+                            context.Response.Headers[hstsHeaderName] = settings.GenerateResponseValue();
+                        }
+                    }
+                    else
+                    {
+                        // we are safe to add the new header
+                        context.Response.Headers.Add(hstsHeaderName, new[] { settings.GenerateResponseValue() });
+                    }
+                }
+            }, _currentSettings);
+
             if (Next != null)
             {
                 await Next.Invoke(context);
-            }
-
-            // We need to check to see if the application has already added the key
-            if (context.Response.Headers.ContainsKey(hstsHeaderName))
-            {
-                // it has, so check to see if we can override the application
-                if (_currentSettings.OverwriteExisting)
-                {
-                    context.Response.Headers[hstsHeaderName] = _currentSettings.GenerateResponseValue();
-                }
-            }
-            else
-            {
-                // we are safe to add the new header
-                context.Response.Headers.Add(hstsHeaderName, new[] {_currentSettings.GenerateResponseValue()});
             }
         }
 

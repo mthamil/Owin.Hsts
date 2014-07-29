@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owin.Hsts", "Owin.Hsts\Owin.Hsts.csproj", "{2D8B8EFF-9023-40DA-BBA0-4E5754C0A58C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owin.Hsts.Tests", "Owin.Hsts.Tests\Owin.Hsts.Tests.csproj", "{EAC9CDD9-0AE3-4CBE-BBE5-4D1B53B3DD65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D8B8EFF-9023-40DA-BBA0-4E5754C0A58C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D8B8EFF-9023-40DA-BBA0-4E5754C0A58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D8B8EFF-9023-40DA-BBA0-4E5754C0A58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D8B8EFF-9023-40DA-BBA0-4E5754C0A58C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC9CDD9-0AE3-4CBE-BBE5-4D1B53B3DD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC9CDD9-0AE3-4CBE-BBE5-4D1B53B3DD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC9CDD9-0AE3-4CBE-BBE5-4D1B53B3DD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC9CDD9-0AE3-4CBE-BBE5-4D1B53B3DD65}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

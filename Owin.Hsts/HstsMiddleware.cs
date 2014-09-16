@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Owin;
 
 namespace Owin.Hsts
@@ -27,6 +28,14 @@ namespace Owin.Hsts
 
         public override async Task Invoke(IOwinContext context)
         {
+            // Header must not be set on non https calls
+            // ref: http://tools.ietf.org/html/rfc6797#section-7.2
+            if (SchemeIsNotHttps(context))
+            {
+                await InvokeNext(context);
+                return;
+            }
+
             // register for the call to OnSendingHeaders first
             // ref: https://github.com/aspnet/Security/issues/31#issuecomment-50470832
             context.Response.OnSendingHeaders(state =>
@@ -52,12 +61,21 @@ namespace Owin.Hsts
                 }
             }, _currentSettings);
 
+            await InvokeNext(context);
+        }
+
+        private async Task InvokeNext(IOwinContext context)
+        {
             if (Next != null)
             {
                 await Next.Invoke(context);
             }
         }
 
+        private static bool SchemeIsNotHttps(IOwinContext context)
+        {
+            return !context.Request.Scheme.Equals("https", StringComparison.Ordinal);
+        }
     }
 
 }

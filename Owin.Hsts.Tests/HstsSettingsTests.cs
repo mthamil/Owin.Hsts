@@ -15,7 +15,7 @@ namespace Owin.Hsts.Tests
             var result = settings.GenerateResponseValue();
 
             // Assert
-            Assert.AreEqual(result, "max-age=2419200; includeSubDomains", result);
+            Assert.AreEqual(result, "max-age=2419200 ; includeSubDomains", result);
 
             // Verify
 

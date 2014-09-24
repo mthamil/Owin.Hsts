@@ -38,7 +38,7 @@ namespace Owin.Hsts
             var sb = new StringBuilder(String.Format("max-age={0}", (int) Duration.TotalSeconds));
             if (IncludeSubDomains)
             {
-                sb.Append("; includeSubDomains");
+                sb.Append(" ; includeSubDomains");
             }
             return sb.ToString();
         }

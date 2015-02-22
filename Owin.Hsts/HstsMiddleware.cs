@@ -30,7 +30,7 @@ namespace Owin.Hsts
         {
             // Header must not be set on non https calls
             // ref: http://tools.ietf.org/html/rfc6797#section-7.2
-            if (SchemeIsNotHttps(context))
+            if (!context.Request.IsSecure)
             {
                 await InvokeNext(context);
                 return;
@@ -70,11 +70,6 @@ namespace Owin.Hsts
             {
                 await Next.Invoke(context);
             }
-        }
-
-        private static bool SchemeIsNotHttps(IOwinContext context)
-        {
-            return !context.Request.Scheme.Equals("https", StringComparison.Ordinal);
         }
     }
 

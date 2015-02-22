@@ -25,7 +25,7 @@ namespace Owin.Hsts.Tests
             _mockContext.Setup(c => c.Request).Returns(_mockRequest.Object);
             _stubResponse = new StubResponse(_mockContext.Object);
             _mockContext.Setup(c => c.Response).Returns(_stubResponse);
-            _mockRequest.Setup(r => r.Scheme).Returns("https");  //Default the request to https
+            _mockRequest.Setup(r => r.IsSecure).Returns(true);  //Default the request to https
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Owin.Hsts.Tests
         {
             // Arrange
             var middleware = new HstsMiddleware(null);
-            _mockRequest.Setup(r => r.Scheme).Returns("http");
+            _mockRequest.Setup(r => r.IsSecure).Returns(false);
 
             // Act
             await middleware.Invoke(_mockContext.Object);
